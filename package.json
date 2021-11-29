@@ -1,0 +1,20 @@
+{
+  "name": "nilo_project",
+  "version": "1.0.0",
+  "description": "My sample project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/niloaydin/nilo_project.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/niloaydin/nilo_project/issues"
+  },
+  "homepage": "https://github.com/niloaydin/nilo_project#readme"
+}
