@@ -9,3 +9,4 @@ class Person {
         console.log(`Hello ${person.name}, this is ${this.name}`)
     }
 }
+' ay umarim olur bu sefer '
