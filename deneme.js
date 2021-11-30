@@ -10,3 +10,4 @@ class Person {
     }
 }
 'New person = Emre'
+'Second person = Selen, 34'
