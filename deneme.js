@@ -10,3 +10,4 @@ class Person {
     }
 }
 ' ay umarim olur bu sefer '
+'bu sefer olucak gibi'
