@@ -9,6 +9,3 @@ class Person {
         console.log(`Hello ${person.name}, this is ${this.name}`)
     }
 }
-askljdksajda
-'deneme 1 2 3'
-'yeniden deneme'
