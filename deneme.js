@@ -9,4 +9,4 @@ class Person {
         console.log(`Hello ${person.name}, this is ${this.name}`)
     }
 }
-const eli = 'new person'
+const eli = 'new person, age:34'
