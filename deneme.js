@@ -5,7 +5,7 @@ class Person {
         this.photos = []
         this.likes = []
     }
-    greet (person) {
+    greet(person) {
         console.log(`Hello ${person.name}, this is ${this.name}`)
     }
 }
