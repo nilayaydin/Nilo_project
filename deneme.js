@@ -9,4 +9,4 @@ class Person {
         console.log(`Hello ${person.name}, this is ${this.name}`)
     }
 }
-'new person = Emre '
+'new person = Emre, age:34 '
