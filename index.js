@@ -9,3 +9,4 @@ class Person {
         console.log (`Hello ${Person.name}, this is ${this.name}`)
     }
 };
+console.log ('hello world');
