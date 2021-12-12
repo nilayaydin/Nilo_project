@@ -11,3 +11,4 @@ class Person {
     }
 };
 console.log ('hello world');
+console.log('seyos')
