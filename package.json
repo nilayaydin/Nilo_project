@@ -1,13 +1,12 @@
 {
-  "name": "js101",
-  "version": "0.0.1",
-  "description": "In-class example of BE101 class",
-  "main": "src/index.js",
+  "name": "nilo-project",
+  "version": "0.0.0",
+  "description": "Nilay Project",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "lint-staged",
     "prepare": "husky install",
-    "start": "node src/index.js"
+    "start": "node ./bin/www"
   },
   "husky": {
     "hooks": {
@@ -41,6 +40,11 @@
     "prettier": "^2.5.1"
   },
   "dependencies": {
-    "colors": "^1.4.0"
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "express": "~4.16.1",
+    "http-errors": "~1.6.3",
+    "morgan": "~1.9.1",
+    "pug": "2.0.0-beta11"
   }
 }
