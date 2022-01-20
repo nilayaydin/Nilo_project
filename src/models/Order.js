@@ -12,8 +12,8 @@ class Order {
   addProduct(product, quantity = 1) {
     // TODO: Use product.Id when searching product
     // TODO: No need to use some. Refactor the code.
-    if (this.orderItems.some(orderItem => orderItem.product.name == product.name)) {
-      this.orderItems.find(orderItem => orderItem.product.name == product.name).quantity += quantity
+    if (this.orderItems.some(orderItem => orderItem.product.id == product.id)) {
+      this.orderItems.find(orderItem => orderItem.product.id == product.id).quantity += quantity
       return
     }
 

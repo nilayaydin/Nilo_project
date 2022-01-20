@@ -7,11 +7,11 @@ class User {
     this.likesProduct = []
   }
 
-  createOrders(order) {
+  addOrder(order) {
     this.orders.push(order)
   }
 
-  createAddresses(address) {
+  createAddress(address) {
     this.addresses.push(address)
   }
 

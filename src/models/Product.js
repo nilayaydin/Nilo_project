@@ -3,7 +3,7 @@ class Product {
     this.name = name
     this.category = category
     this.brand = brand
-    // this.productId = '' // use id generator
+    this.productId = Math.floor(Math.random() * 100) // use id generator
     // this.stock = ''
     // this.quantity = 0 // it's a number
     this.price = price // its supposed to be a number
