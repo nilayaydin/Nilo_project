@@ -1,32 +1,51 @@
 /* eslint-disable no-plusplus */
-const OrderItem = require('./OrderItem')
+const mongoose = require('mongoose')
+const autopopulate = require('mongoose-autopopulate')
 
+const orderSchema = new mongoose.Schema({
+  orderItems: [
+    {
+      product: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Product',
+        required: true,
+        autopopulate: true,
+      },
+      quantity: {
+        type: Number,
+        required: true,
+      },
+    },
+  ],
+  amount: Number,
+})
 class Order {
-  constructor() {
-    this.orderId = Math.floor(Math.random() * 100) // use id generator function for this. (UUID)
-    this.orderItems = [] // I'm going to export the info from the product class
-    // I deleted status and date
-    this.amount = 0 // Odenecek tutar ?
-  }
-
-  addProduct(product, quantity = 1) {
-    // TODO: Use product.Id when searching product
+  async addProduct(product, quantity = 1) {
     // TODO: No need to use some. Refactor the code.
     if (this.orderItems.some(orderItem => orderItem.product.id == product.id)) {
       this.orderItems.find(orderItem => orderItem.product.id == product.id).quantity += quantity
       return
     }
 
-    this.orderItems.push(new OrderItem(product, quantity))
+    this.orderItems.push({ product, quantity })
+    await this.save()
   }
 
-  calculateAmount() {
-    // eslint-disable-next-line no-const-assign
+  get totalAmount() {
+    let getTotalAmount = 0
     for (let i = 0; i < this.orderItems.length; i++) {
-      this.amount += this.orderItems[i].amount
+      getTotalAmount += this.orderItems[i].amount
     }
-    return this.amount
+    return getTotalAmount
   }
+
+  // async calculateAmount() {
+  //   // eslint-disable-next-line no-const-assign
+  //   for (let i = 0; i < this.orderItems.length; i++) {
+  //     this.amount += this.orderItems[i].amount
+  //   }
+  //   return this.amount
+  // }
 
   // addProduct(productId, quantity) {
   //   const firstOrderItem = new Orderitem(this.orderId, productId, quantity)
@@ -34,4 +53,7 @@ class Order {
   // }
 }
 
-module.exports = Order
+orderSchema.loadClass(Order)
+orderSchema.plugin(autopopulate)
+
+module.exports = mongoose.model('Order', orderSchema)

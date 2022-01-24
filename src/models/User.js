@@ -1,29 +1,55 @@
+const mongoose = require('mongoose')
+const autopopulate = require('mongoose-autopopulate')
+
+const userSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+  },
+  age: {
+    type: Number,
+    required: true,
+  },
+  orders: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      autopopulate: true,
+    },
+  ],
+  addresses: String,
+
+  likesProduct: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Product',
+      autopopulate: true,
+    },
+  ],
+})
 class User {
-  constructor(name, age) {
-    this.name = name
-    this.age = age
-    this.orders = []
-    this.addresses = []
-    this.likesProduct = []
-  }
-
-  addOrder(order) {
+  async addOrder(order) {
     this.orders.push(order)
+    await this.save()
   }
 
-  createAddress(address) {
+  async createAddress(address) {
     this.addresses.push(address)
+    await this.save()
   }
 
-  likeProduct(product) {
+  async likeProduct(product) {
     this.likesProduct.push(product.name)
     product.likedBy.push(this.name)
+
+    await this.save()
+    await product.save()
   }
 }
 
-// const nilay = new User('nilay', 18)
+userSchema.loadClass(User)
+userSchema.plugin(autopopulate)
 
-module.exports = User
+module.exports = mongoose.model('User', userSchema)
 
 // if (this.email === undefined) this.email = ''
 // if (this.password === undefined) this.password = ''

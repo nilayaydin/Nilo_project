@@ -1,19 +1,45 @@
-class Product {
-  constructor(name, category, brand, price) {
-    this.name = name
-    this.category = category
-    this.brand = brand
-    this.productId = Math.floor(Math.random() * 100) // use id generator
-    // this.stock = ''
-    // this.quantity = 0 // it's a number
-    this.price = price // its supposed to be a number
-    this.photos = [] // maybe I can also add this in orderitem?
-    this.likedBy = []
-  }
+const mongoose = require('mongoose')
+const autopopulate = require('mongoose-autopopulate')
 
-  addPhoto(photo) {
+const productSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+  },
+  category: {
+    type: String,
+    required: true,
+  },
+  brand: {
+    type: String,
+    required: true,
+  },
+  price: {
+    type: Number,
+    required: true,
+  },
+  photos: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      autopopulate: true,
+    },
+  ],
+  likedby: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      autopopulate: true,
+    },
+  ],
+})
+class Product {
+  async addPhoto(photo) {
     this.photos.push(photo)
+    await this.save()
   }
 }
 
-module.exports = Product
+productSchema.loadClass(Product)
+productSchema.plugin(autopopulate)
+
+module.exports = mongoose.model('Product', productSchema)
