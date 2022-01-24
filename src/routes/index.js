@@ -1,16 +1,23 @@
 /* eslint-disable func-names */
 const express = require('express')
 const User = require('../models/User')
-const Order = require('../models/Order')
-const Product = require('../models/Product')
+// const Order = require('../models/Order')
+// const Product = require('../models/Product')
 
-const furkan = new User('furkan', 25)
-const veganBurger = new Product('vegan burger', 'food', 'veggie', 40)
+// const init = async () => {
+//   try {
+//     const furkan = await User.create({ name: 'furkan', age: 25 })
+//     const veganBurger = await Product.create({ name: 'vegan burger', category: 'food', brand: 'veggie', price: 40 })
 
-const order1 = new Order()
-order1.addProduct(veganBurger, 2)
+//     const order1 = await Order.create({})
+//     await order1.addProduct(veganBurger, 2)
 
-furkan.addOrder(order1)
+//     await furkan.addOrder(order1)
+//   } catch (e) {
+//     console.log('error!', e)
+//   }
+// }
+// init()
 
 const router = express.Router()
 
@@ -21,8 +28,18 @@ router.get('/', (req, res, next) => {
 })
 
 // eslint-disable-next-line no-unused-vars
-router.get('/profile', (req, res, next) => {
-  res.render('profile', { user: furkan })
+router.get('/profile/:userId', async (req, res, next) => {
+  const user = await User.findById(req.params.userId)
+
+  res.render('profile', { user })
 })
+
+// router.get('/:userId', (req, res) => {
+//  res.send(users[req.params.userId])
+
+//   // const user = users[req.params.userId]
+//   // if (user) res.render('user', { user })
+//   // else res.sendStatus(404)
+// })
 
 module.exports = router

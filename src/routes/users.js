@@ -3,36 +3,11 @@ const express = require('express')
 
 const router = express.Router()
 
-const Order = require('../models/Order')
+// onst Order = require('../models/Order')
 const User = require('../models/User')
-const Product = require('../models/Product')
+// const Product = require('../models/Product')
 // const OrderItem = require('../models/OrderItem')
 
-const neyzen = new User('neyzen', 30)
-const burger = new Product('Vegan burger', 'food', 'veggie', 20)
-const veganPizza = new Product('pizza', 'food', 'aysebrand', 30)
-const order1 = new Order()
-const sinem = new User('Sinem', 18)
-
-// order1.addProduct(burgerOrder)
-order1.addProduct(burger, 2)
-order1.addProduct(veganPizza)
-
-// console.log(order1.calculateAmount())
-
-// console.log(order1.orderItems)
-
-neyzen.likeProduct(veganPizza)
-
-// console.log(neyzen)
-// console.log(burgerOrder)
-
-neyzen.likeProduct(burger)
-// console.log(neyzen)
-
-// console.log(order1.item.length)
-
-const users = [sinem, neyzen]
 // const start = Date.now()
 // setTimeout(() => {
 //   console.log(`I am Suli, and I am going to come back in ${Date.now() - start} milliseconds.`)
@@ -43,60 +18,95 @@ const users = [sinem, neyzen]
 // }
 
 /* GET users listing. */
-router.get('/', (req, res) => {
-  let result = users
+
+// router.get('/', (req, res) => {
+//   let result = users
+//   if (req.query.name) {
+//     result = users.filter(user => user.name == req.query.name)
+//   }
+
+//   res.send(result)
+// }) You would search the users by the name
+
+router.get('/', async (req, res) => {
+  const query = {}
+
   if (req.query.name) {
-    result = users.filter(user => user.name == req.query.name)
+    query.name = req.query.name
   }
 
-  res.send(result)
+  if (req.query.age) {
+    query.age = req.query.age
+  }
+
+  res.send(await User.find(query))
 })
 
-router.get('/:userId', (req, res) => {
-  res.send(users[req.params.userId])
+router.get('/initialize', async (req, res) => {
+  const neyzen = await User.create({ name: 'Neyzen', age: 30 })
+  const taha = await User.create({ name: 'Taha', age: 24 })
+  const nedim = await User.create({ name: 'Nedim', age: 23 })
 
-  // const user = users[req.params.userId]
-  // if (user) res.render('user', { user })
-  // else res.sendStatus(404)
+  neyzen.addresses = 'Fikirtepe'
+  taha.addresses = 'Uskudar'
+  nedim.addresses = 'Kadikoy'
+
+  console.log(neyzen)
+  res.sendStatus(200)
 })
+
+router.get('/:userId', async (req, res) => {
+  const user = await User.findById(req.params.userId)
+
+  if (user) res.render('user', { user })
+  else res.sendStatus(404)
+})
+
+// router.get('/:userId', (req, res) => {
+//   res.send(users[req.params.userId])
+
+//   // const user = users[req.params.userId]
+//   // if (user) res.render('user', { user })
+//   // else res.sendStatus(404)
+// })
 
 /* UPDATE users listing. */
 
-router.patch('/:userId', async (req, res) => {
-  const user = await User.findByNameAndUpdate(req.params.name, { name: req.body.name })
-  res.send(user)
-})
+// router.patch('/:userId', async (req, res) => {
+//   const user = await User.findByNameAndUpdate(req.params.name, { name: req.body.name })
+//   res.send(user)
+// })
 
 /* ADD new users */
 
-router.post('/', async (req, res) => {
-  const { name, age } = req.body
+// router.post('/', async (req, res) => {
+//   const { name, age } = req.body
 
-  if (!name || !age) {
-    res
-      .send({
-        message: 'Missing fields.',
-      })
-      .status(400)
-    return
-  }
+//   if (!name || !age) {
+//     res
+//       .send({
+//         message: 'Missing fields.',
+//       })
+//       .status(400)
+//     return
+//   }
 
-  // const user = await User.create({
-  //   name,
-  //   age,
-  // })
-  const newUser = new User(name, age)
-  users.push(newUser)
+//   // const user = await User.create({
+//   //   name,
+//   //   age,
+//   // })
+//   const newUser = new User(name, age)
+//   users.push(newUser)
 
-  res.send(newUser)
-})
+//   res.send(newUser)
+// })
 
 /* DELETE users */
 
-router.delete('/:id', async (req, res) => {
-  await User.findByIdAndDelete(req.params.id)
+// router.delete('/:id', async (req, res) => {
+//   await User.findByIdAndDelete(req.params.id)
 
-  res.sendStatus(200)
-})
+//   res.sendStatus(200)
+// })
 
 module.exports = router
