@@ -9,8 +9,18 @@ require('./database-connection')
 
 const indexRouter = require('./routes/index')
 const usersRouter = require('./routes/users')
+const ordersRouter = require('./routes/orders')
 
 const app = express()
+
+if (app.get('env') == 'development') {
+  /* eslint-disable-next-line */
+  app.use(require('connect-livereload')())
+  /* eslint-disable-next-line */
+  require('livereload')
+    .createServer({ extraExts: ['pug'] })
+    .watch([`${__dirname}/public`, `${__dirname}/views`])
+}
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'))
@@ -24,6 +34,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 app.use('/', indexRouter) // corresponding routehandler
 app.use('/users', usersRouter)
+app.use('/orders', ordersRouter)
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
@@ -40,5 +51,8 @@ app.use((err, req, res) => {
   res.status(err.status || 500)
   res.render('error')
 })
+
+// eslint-disable-next-line no-console
+console.log('im not dead but im not alive')
 
 module.exports = app
