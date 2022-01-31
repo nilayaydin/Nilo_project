@@ -2,12 +2,12 @@ extends layout
 
 block content
   h1 #{user.name} (#{user.age})
-  p Order: #{user.orders}
+  p Order: #{user.orders.name}
   p Adresses:#{user.adresses}
 
   each order in user.orders
-    h3 #{order.orderItems[0].product.name}
-    if order.orderItems[0].product.likedBy.length == 0
+    h3 #{order.orderItems[0].name}
+    if order.orderItems[0].likedBy.length == 0
       p no likes yet!
     else
-      p #{order.orderItems[0].product.photo.likedBy.join(', ')}
+      p #{order.orderItems[0].likedBy.join(', ')}

@@ -5,37 +5,35 @@ const autopopulate = require('mongoose-autopopulate')
 const orderSchema = new mongoose.Schema({
   orderItems: [
     {
-      product: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Product',
-        required: true,
-        autopopulate: true,
-      },
-      quantity: {
-        type: Number,
-        required: true,
-      },
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Product',
+      required: true,
+      autopopulate: true,
     },
   ],
+  quantity: [],
+  amount: 0,
 })
 class Order {
   async addProduct(product, quantity = 1) {
     // TODO: No need to use some. Refactor the code.
-    if (this.orderItems.some(orderItem => orderItem.product.id == product.id)) {
-      this.orderItems.find(orderItem => orderItem.product.id == product.id).quantity += quantity
+    // eslint-disable-next-line no-console
+    console.log(product)
+    if (this.orderItems.some(orderItem => orderItem.id == product.id)) {
+      this.orderItems.find(orderItem => orderItem.id == product.id).quantity += quantity
       return
     }
 
-    this.orderItems.push({ product, quantity })
+    this.orderItems.push(product)
+    this.quantity.push(quantity)
     await this.save()
   }
 
-  get totalAmount() {
-    let getTotalAmount = 0
-    for (let i = 0; i < this.orderItems.length; i++) {
-      getTotalAmount += this.orderItems[i].amount
+  async calculateAmount() {
+    for (let i = 0; i < this.orderItems.length; i += 1) {
+      this.amount += this.orderItems[i].price * this.quantity[i]
     }
-    return getTotalAmount
+    await this.save()
   }
 
   // async calculateAmount() {

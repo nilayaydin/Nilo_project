@@ -10,10 +10,11 @@ const userSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  addresses: String,
+  addresses: String, // Ya array yap ya da methodu sil
   orders: [
     {
       type: mongoose.Schema.Types.ObjectId,
+      ref: 'Order',
       autopopulate: true,
     },
   ],

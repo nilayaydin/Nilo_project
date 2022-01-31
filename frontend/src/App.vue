@@ -1,9 +1,7 @@
 <template lang="pug">
   #app
-    h1 Veganzimu
     #nav
-      router-link(to="/") Home |&nbsp;
-      router-link(to="/about") About
+      router-link(to="/") User List
     router-view
 </template>
 s
@@ -13,7 +11,6 @@ s
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
 }
 
