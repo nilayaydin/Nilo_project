@@ -6,6 +6,7 @@ const router = express.Router()
 // const Order = require('../models/Order')
 const User = require('../models/User')
 const Product = require('../models/Product')
+const Order = require('../models/Order')
 
 // const start = Date.now()
 // setTimeout(() => {
@@ -53,15 +54,20 @@ router.get('/initialize', async (req, res) => {
   const veganPizza = await Product.create({ name: 'pizza', category: 'food', brand: 'aysebrand', price: 30 })
   const pinkShirt = await Product.create({ name: 'Pink Shirt', category: 'clothing', brand: 'zara', price: 100 })
 
+  const burgerOrder = await Order.create({ orderItems: [], quantity: [], amount: 0 })
+  await burgerOrder.addProduct(burger, 2)
+  await burgerOrder.calculateAmount()
+  console.log(burgerOrder)
+  await neyzen.addOrder(burgerOrder)
   //
 
   // const finalBurgerOrder = await Order.create({ orderItems: burgerOrder })
 
   // await finalBurgerOrder.addProduct(burgerOrder)
 
-  await neyzen.addOrder(burger)
-  await nedim.addOrder(veganPizza)
-  await taha.addOrder(pinkShirt)
+  // await neyzen.addOrder(burgerOrder) // Burda product ekliyorsun ama order eklemen lazim!!!!
+  // await nedim.addOrder(veganPizza)
+  // await taha.addOrder(pinkShirt)
 
   await taha.likeProduct(burger)
   await neyzen.likeProduct(veganPizza)
@@ -78,7 +84,7 @@ router.get('/initialize', async (req, res) => {
 router.get('/:userId', async (req, res) => {
   const user = await User.findById(req.params.userId)
 
-  if (user) res.render('user', { user })
+  if (user) res.send(user)
   else res.sendStatus(404)
 })
 
