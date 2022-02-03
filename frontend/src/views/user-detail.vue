@@ -1,11 +1,11 @@
 <script>
-import Counter from '@/components/counter.vue'
+// import Counter from '@/components/counter.vue'
 import UserCard from '@/components/user-card.vue'
 import { mapActions } from 'vuex'
 
 export default {
   name: 'UserDetail',
-  components: { UserCard, Counter },
+  components: { UserCard },
   data() {
     return {
       user: null,
@@ -24,5 +24,4 @@ export default {
   .about
     h1 This is an user detail
     UserCard(:user="user" v-if="user")
-    Counter
 </template>
