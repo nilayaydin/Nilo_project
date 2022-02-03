@@ -25,12 +25,4 @@ mongoose
   .then(() => console.log('connection established'))
   .catch(console.log)
 
-// const Panda = mongoose.model('Panda', { name: String, age: Number })
-
-// // Panda.find({ age: { $gte: 18 } }).then(console.log) --> This is a promise.
-
-// async function main() {
-//   const pandas = await Panda.find({ age: { $gt: 18 } })
-//   console.log(pandas)
-// }
-// main()
+module.exports = mongoose.connection

@@ -3,10 +3,10 @@ extends layout
 block content
   h1 #{user.name} (#{user.age})
   p Order: #{user.orders.name}
-  p Adresses:#{user.adresses}
+  p Adresses:#{user.addresses}
 
   each order in user.orders
-    h3 #{order.orderItems[0].name}
+    h3 #{order.orderItems[0].product}
     if order.orderItems[0].likedBy.length == 0
       p no likes yet!
     else
