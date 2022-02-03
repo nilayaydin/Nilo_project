@@ -3,19 +3,10 @@ const express = require('express')
 
 const router = express.Router()
 
-// const Order = require('../models/Order')
-const User = require('../models/User')
-const Product = require('../models/Product')
-const Order = require('../models/Order')
-
-// const start = Date.now()
-// setTimeout(() => {
-//   console.log(`I am Suli, and I am going to come back in ${Date.now() - start} milliseconds.`)
-// })
-
-// for (let i = 0; i < 1000000000; i++) {
-//   Math.random()
-// }
+// const Order = require('../models/order')
+const User = require('../models/user')
+const Product = require('../models/product')
+const Order = require('../models/order')
 
 /* GET users listing. */
 
@@ -42,23 +33,43 @@ router.get('/', async (req, res) => {
 })
 
 router.get('/initialize', async (req, res) => {
-  const neyzen = await User.create({ name: 'Neyzen', age: 30 })
-  const taha = await User.create({ name: 'Taha', age: 24 })
-  const nedim = await User.create({ name: 'Nedim', age: 23 })
+  const neyzen = new User({ name: 'Neyzen', age: 30, email: 'neyzen@coyotiv.com' })
+  await neyzen.setPassword('test')
+
+  const funda = new User({ name: 'Funda', age: 25, email: 'funda@coyotiv.com' })
+  await funda.setPassword('test')
+
+  const serkan = new User({ name: 'Serkan', age: 23, email: 'serkan@coyotiv.com' })
+  await serkan.setPassword('test')
 
   neyzen.addresses = 'Fikirtepe'
-  taha.addresses = 'Uskudar'
-  nedim.addresses = 'Kadikoy'
+  funda.addresses = 'Bostanli'
+  serkan.addresses = 'Bulgaristan'
 
   const burger = await Product.create({ name: 'Vegan burger', category: 'food', brand: 'veggie', price: 20 })
   const veganPizza = await Product.create({ name: 'pizza', category: 'food', brand: 'aysebrand', price: 30 })
   const pinkShirt = await Product.create({ name: 'Pink Shirt', category: 'clothing', brand: 'zara', price: 100 })
 
   const burgerOrder = await Order.create({ orderItems: [], quantity: [], amount: 0 })
+  const order1 = await Order.create({ orderItems: [], quantity: [], amount: 0 })
+  const order2 = await Order.create({ orderItems: [], quantity: [], amount: 0 })
+
+  await order1.addProduct(veganPizza, 5)
+  await order1.addProduct(pinkShirt, 3)
   await burgerOrder.addProduct(burger, 2)
+  await order2.addProduct(pinkShirt, 8)
+
+  await order1.calculateAmount()
   await burgerOrder.calculateAmount()
+  await order2.calculateAmount()
   console.log(burgerOrder)
+  console.log(order1)
+  console.log(order2)
+
   await neyzen.addOrder(burgerOrder)
+  await funda.addOrder(order1)
+  await serkan.addOrder(order2)
+
   //
 
   // const finalBurgerOrder = await Order.create({ orderItems: burgerOrder })
@@ -66,17 +77,16 @@ router.get('/initialize', async (req, res) => {
   // await finalBurgerOrder.addProduct(burgerOrder)
 
   // await neyzen.addOrder(burgerOrder) // Burda product ekliyorsun ama order eklemen lazim!!!!
-  // await nedim.addOrder(veganPizza)
-  // await taha.addOrder(pinkShirt)
+  // await serkan.addOrder(veganPizza)
+  // await funda.addOrder(pinkShirt)
 
-  await taha.likeProduct(burger)
+  await funda.likeProduct(burger)
   await neyzen.likeProduct(veganPizza)
-  await nedim.likeProduct(pinkShirt)
+  await serkan.likeProduct(pinkShirt)
 
-  // await neyzen.save()
-  // await taha.save()
-  // await nedim.save()
-  // await finalBurgerOrder.save()
+  await neyzen.save()
+  await funda.save()
+  await serkan.save()
 
   res.sendStatus(200)
 })
@@ -89,16 +99,25 @@ router.get('/:userId', async (req, res) => {
 })
 
 /* POST create a user */
+// router.post('/', async (req, res) => {
+//   const createdUser = await User.create(req.body)
+//   res.send(createdUser)
+// })
+// The code below does the same thing but it is more secure. You can add address or any other properties in the instance but you can't in the second one.
+
 router.post('/', async (req, res) => {
-  const createdUser = await User.create(req.body)
+  const userToCreate = {
+    name: req.body.name,
+    age: req.body.age,
+  }
+
+  const createdUser = await User.create(userToCreate)
   res.send(createdUser)
 })
 
 router.post('/:userId/likes', async (req, res) => {
   const user = await User.findById(req.params.userId)
   const product = await Product.findById(req.body.productId)
-
-  console.log('let see', product)
 
   await user.likeProduct(product)
   res.sendStatus(200)
