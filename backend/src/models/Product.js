@@ -38,7 +38,7 @@ class Product {
     await this.save()
   }
 }
-
+// photo ekleyebilmem icin photo class olusturmam lazim.
 productSchema.loadClass(Product)
 productSchema.plugin(autopopulate)
 
