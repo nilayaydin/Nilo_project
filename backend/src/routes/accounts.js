@@ -5,7 +5,7 @@ const User = require('../models/user')
 const router = express.Router()
 
 router.get('/session', (req, res) => {
-  res.send(req.session)
+  res.send(req.user)
 })
 
 // router.post('/', async (req, res) => {

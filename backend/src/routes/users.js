@@ -69,6 +69,7 @@ router.get('/initialize', async (req, res) => {
   await neyzen.addOrder(burgerOrder)
   await funda.addOrder(order1)
   await serkan.addOrder(order2)
+  await neyzen.addOrder()
 
   //
 
