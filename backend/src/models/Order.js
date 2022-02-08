@@ -8,7 +8,7 @@ const orderSchema = new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Product',
       required: true,
-      autopopulate: true,
+      autopopulate: { maxDepth: 1 },
     },
   ],
   quantity: [],

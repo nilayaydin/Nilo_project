@@ -16,7 +16,7 @@ const userSchema = new mongoose.Schema({
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Order',
-      autopopulate: { maxDepth: 1 },
+      autopopulate: { maxDepth: 3 },
     },
   ],
   likesProduct: [
