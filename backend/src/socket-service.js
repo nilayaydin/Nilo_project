@@ -1,0 +1,34 @@
+const io = require('socket.io')()
+
+io.on('connect', socket => {
+  socket.emit('connection established')
+
+  // setInterval(() => {
+  //   socket.emit('hello world!')
+  // }, 2000)
+
+  // socket.on('new message', (number, cb) => {
+  //   console.log('a new message received')
+  //   cb(number + 1)
+  // })
+
+  socket.on('new message', (streamId, message) => {
+    socket.to(streamId).emit('new live stream message', message)
+  })
+
+  socket.on('join stream', streamId => {
+    socket.join(streamId)
+  })
+
+  socket.on('go live', (userId, cb) => {
+    // eslint-disable-next-line no-console
+    console.log(`${userId} is going live`)
+
+    socket.broadcast.emit('new live stream', userId)
+    socket.join(userId)
+
+    cb(true)
+  })
+})
+
+module.exports = io

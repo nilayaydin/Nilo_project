@@ -12,8 +12,8 @@ export default {
   h2 Orders: {{ user.orders.length }}
 
   .box(v-for="order in user.orders")
-  h3 {{ order.orderItems.map(product => product.name).join(', ') }}
-
+    ul(v-for="orderItem in order.orderItems")
+      li {{ orderItem.name }}
 
 </template>
 
