@@ -70,12 +70,12 @@ const store = new Vuex.Store({
       commit(mutations.SET_USER, user.data || null)
     },
     async login({ commit }, credentials) {
-      try {
-        const user = await axios.post('/api/accounts/session', credentials)
-        commit(mutations.SET_USER, user.data)
-      } catch (e) {
-        throw e
-      }
+      // try {
+      const user = await axios.post('/api/accounts/session', credentials)
+      commit(mutations.SET_USER, user.data)
+      //  } catch (e) {
+      // throw e
+      //}
     },
     async register(store, user) {
       return axios.post('/api/accounts', user)
@@ -85,11 +85,11 @@ const store = new Vuex.Store({
       commit(mutations.SET_USER, null)
     },
     async goLive({ state, commit }) {
-      socket.emit('go live', state.user._id, status => {
+      socket.emit('go live', state.user._id, () => {
         commit(mutations.SET_LIVE_STREAM, state.user._id)
       })
     },
-    async addLiveStream({ state, commit }, stream) {
+    async addLiveStream({ commit }, stream) {
       commit(mutations.ADD_LIVE_STREAM, stream)
     },
     async sendMessageToLiveStream({ state, commit }, body) {
@@ -100,7 +100,7 @@ const store = new Vuex.Store({
       commit(mutations.ADD_MESSAGE_TO_LIVE_STREAM, message)
       socket.emit('new message', state.currentLiveStream, message)
     },
-    async joinStream({ state, commit }, stream) {
+    async joinStream({ commit }, stream) {
       socket.emit('join stream', stream)
       commit(mutations.SET_LIVE_STREAM, stream)
     },
