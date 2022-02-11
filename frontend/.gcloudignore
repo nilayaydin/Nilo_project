@@ -1,8 +1,5 @@
 node_modules
 .history
-.eslintrc.json
-.prettierignore
-.prettierrc
 test
 jest.config.js
 jest.setup.js
