@@ -11,7 +11,7 @@ require('./database-connection')
 const mongoose = require('mongoose')
 const cors = require('cors')
 
-const User = require('./models/user')
+const User = require('./models/User')
 
 const socketService = require('./socket-service')
 
