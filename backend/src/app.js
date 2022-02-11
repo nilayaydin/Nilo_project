@@ -7,12 +7,15 @@ const logger = require('morgan')
 const session = require('express-session')
 const MongoStore = require('connect-mongo')
 const passport = require('passport')
+require('./database-connection')
+const mongoose = require('mongoose')
+const cors = require('cors')
+
 const User = require('./models/user')
 
-const mongooseConnection = require('./database-connection')
 const socketService = require('./socket-service')
 
-const clientPromise = Promise.resolve(mongooseConnection.getClient())
+const clientPromise = mongoose.connection.asPromise().then(connection => connection.getClient())
 
 const indexRouter = require('./routes/index')
 const accountsRouter = require('./routes/accounts')
@@ -22,6 +25,15 @@ const productsRouter = require('./routes/products')
 
 const app = express()
 
+app.use(
+  cors({
+    origin: true,
+    credentials: true,
+  })
+)
+
+
+
 if (app.get('env') == 'development') {
   /* eslint-disable-next-line */
   app.use(require('connect-livereload')())
@@ -30,6 +42,8 @@ if (app.get('env') == 'development') {
     .createServer({ extraExts: ['pug'] })
     .watch([`${__dirname}/public`, `${__dirname}/views`])
 }
+
+app.set('trust proxy', 1)
 
 app.set('io', socketService)
 
@@ -49,6 +63,8 @@ app.use(
     cookie: {
       maxAge: 30 * 24 * 60 * 60 * 1000, // our session expires in 30 day in milliseconds
       path: '/api',
+      sameSite: process.env.NODE_ENV == 'production' ? 'none' : 'strict',
+      secure: process.env.NODE_ENV == 'production',
     },
   })
 )

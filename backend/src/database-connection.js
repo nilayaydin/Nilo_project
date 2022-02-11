@@ -9,7 +9,7 @@ const dbName = process.env.MONGODB_DATABASE
 let connectionString = process.env.MONGODB_CONNECTION_STRING
 // const remote = process.env.MONGODB_REMOTE
 
-console.log(connectionString)
+console.log('Ay umarim gozukur', connectionString)
 
 if (!connectionString) {
   connectionString = `mongodb+srv://${username}:${password}@veganzimu.tztio.mongodb.net/${dbName}?retryWrites=true&w=majority`
