@@ -1,10 +1,10 @@
 /* eslint-disable func-names */
 const express = require('express')
-const User = require('../models/User')
+const User = require('../models/user')
 // eslint-disable-next-line no-unused-vars
-const Order = require('../models/Order')
+const Order = require('../models/order')
 // eslint-disable-next-line no-unused-vars
-const Product = require('../models/Product')
+const Product = require('../models/product')
 
 // const init = async () => {
 //   try {
