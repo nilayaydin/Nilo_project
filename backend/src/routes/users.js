@@ -52,23 +52,29 @@ router.get('/initialize', async (req, res) => {
 
   const burgerOrder = await Order.create({ orderItems: [], quantity: [], amount: 0 })
   const order1 = await Order.create({ orderItems: [], quantity: [], amount: 0 })
-  const order2 = await Order.create({ orderItems: [], quantity: [], amount: 0 })
+
+  // const order2 = await Order.create({
+  //   // eslint-disable-next-line no-underscore-dangle
+  //   orderItems: [{ item: burger._id, quantitity: 2 }, { item: veganPizza._id }],
+  //   userId: neyzen,
+  //   amount: 0,
+  // })
 
   await order1.addProduct(veganPizza, 5)
   await order1.addProduct(pinkShirt, 3)
   await burgerOrder.addProduct(burger, 2)
-  await order2.addProduct(pinkShirt, 8)
+  // await order2.addProduct(pinkShirt, 8)
 
   await order1.calculateAmount()
   await burgerOrder.calculateAmount()
-  await order2.calculateAmount()
+  // await order2.calculateAmount()
   console.log(burgerOrder)
   console.log(order1)
-  console.log(order2)
+  // console.log(order2)
 
   await neyzen.addOrder(burgerOrder)
   await funda.addOrder(order1)
-  await serkan.addOrder(order2)
+  // await serkan.addOrder(order2)
   await neyzen.addOrder()
 
   //
