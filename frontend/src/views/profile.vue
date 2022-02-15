@@ -14,9 +14,10 @@ export default {
   },
   async created() {
     this.users = await this.fetchUsers()
+    await this.createOrder({ orderItems: [] })
   },
   methods: {
-    ...mapActions(['fetchUsers', 'goLive', 'sendMessageToLiveStream', 'joinStream']),
+    ...mapActions(['fetchUsers', 'goLive', 'sendMessageToLiveStream', 'joinStream', 'createOrder']),
     sendMessage(e) {
       e.preventDefault()
       this.sendMessageToLiveStream(this.message)
@@ -42,7 +43,7 @@ export default {
 
 <template lang="pug">
   .home
-    h1 Veganzimu {{ user.name }}
+    h1 Veganzimu {{user.name}}
     h2 Users
     div(v-for="user in users" :user = "user")
       router-link(:to="`/users/${user._id}`") {{user.name}}

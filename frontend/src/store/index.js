@@ -107,6 +107,9 @@ const store = new Vuex.Store({
       socket.emit('join stream', stream)
       commit(mutations.SET_LIVE_STREAM, stream)
     },
+    async createOrder({ commit }, { orderItems }) {
+      await axios.post('/api/orders', { orderItems })
+    },
   },
   modules: {},
 })
