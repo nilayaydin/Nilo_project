@@ -43,10 +43,10 @@ export default {
 
 <template lang="pug">
   .home
-    h1 Veganzimu {{user.name}}
+    h1 Veganzimu {{ user.name }}
     h2 Users
     div(v-for="user in users" :user = "user")
-      router-link(:to="`/users/${user._id}`") {{user.name}}
+      router-link(:to="`/users/${user._id}`") {{ user.name }}
     Counter
     div(v-if="liveStreams.length > 0")
       h2 Live Streams
