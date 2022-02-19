@@ -33,4 +33,8 @@ router.post('/', async (req, res) => {
   res.send(createProduct)
 })
 
+// product/productId/likes this is an endpoint
+// const product = product.getbyId(req.body.productID)
+// await req.user.likeProduct(product)
+
 module.exports = router
