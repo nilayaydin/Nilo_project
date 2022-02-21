@@ -43,7 +43,7 @@ export default {
 
 <template lang="pug">
   .home
-    h1 Veganzimu
+    h1 Veganzimu {{ user.name }}
     h2 Users
     div(v-for="user in users" :user = "user")
       router-link(:to="`/users/${user._id}`") {{ user.name }}

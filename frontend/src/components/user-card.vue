@@ -8,12 +8,13 @@ export default {
 <template lang="pug">
 .box
   h1 {{ user.name }} ({{ user.age }})
-  p Address: {{ user.addresses || 'This user has no adress.' }}
-  h2 Orders: {{ user.orders.length }}
+    .infoaddresses(v-for="adress in user.addresses")
+      p Address: {{ address || 'This user has no adress.' }}
+      h2 Orders: {{ user.orders.length }}
 
   .box(v-for="order in user.orders")
     ul(v-for="orderItem in order.orderItems")
-      li {{ orderItem.name }}
+      li {{ orderItem.item.name }}
 
 </template>
 
