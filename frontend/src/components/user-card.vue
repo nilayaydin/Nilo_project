@@ -9,7 +9,7 @@ export default {
 .box
   h1 {{ user.name }} ({{ user.age }})
     .infoaddresses(v-for="adress in user.addresses")
-      p Address: {{ address || 'This user has no adress.' }}
+      p Address: {{ user.address || 'This user has no adress.' }}
       h2 Orders: {{ user.orders.length }}
 
   .box(v-for="order in user.orders")
