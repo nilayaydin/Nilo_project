@@ -9,7 +9,7 @@ const orderSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Product',
         required: true,
-        autopopulate: { maxDepth: 5 },
+        autopopulate: { maxDepth: 2 },
       },
       quantity: {
         type: Number,
@@ -21,8 +21,8 @@ const orderSchema = new mongoose.Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
-    autopopulate: true,
-    required: true,
+    autopopulate: { maxDepth: 1 },
+    // required: true,
   },
   amount: {
     type: Number,

@@ -11,7 +11,7 @@ const userSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  addresses: String, // Ya array yap ya da methodu sil
+  addresses: [], // Ya array yap ya da methodu sil
   orders: [
     {
       type: mongoose.Schema.Types.ObjectId,
@@ -33,9 +33,13 @@ class User {
     await this.save()
   }
 
-  async createAddress(address) {
+  async addAddress(address) {
     this.addresses.push(address)
     await this.save()
+  }
+
+  async getAddresses() {
+    return this.addresses
   }
 
   async likeProduct(product) {
