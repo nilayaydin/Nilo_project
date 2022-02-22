@@ -33,63 +33,61 @@ router.get('/', async (req, res) => {
 })
 
 router.get('/initialize', async (req, res) => {
-  const neyzen = new User({ name: 'Neyzen', age: 30, email: 'neyzen@coyotiv.com' })
+  // await User.remove({})
+  // await Order.remove({})
+  // await Product.remove({})
+
+  const neyzen = await User.create({ name: 'Neyzen', age: 30, email: 'neyzen@coyotiv.com' })
   await neyzen.setPassword('test')
 
-  const funda = new User({ name: 'Funda', age: 25, email: 'funda@coyotiv.com' })
+  const funda = await User.create({ name: 'Funda', age: 25, email: 'funda@coyotiv.com' })
   await funda.setPassword('test')
 
-  const serkan = new User({ name: 'Serkan', age: 23, email: 'serkan@coyotiv.com' })
+  const serkan = await User.create({ name: 'Serkan', age: 23, email: 'serkan@coyotiv.com' })
   await serkan.setPassword('test')
 
-  neyzen.addresses = 'Fikirtepe'
-  funda.addresses = 'Bostanli'
-  serkan.addresses = 'Bulgaristan'
+  neyzen.addAddress('Fikirtepe')
+  funda.addAddress('Bostanli')
+  serkan.addAddress('Bulgaristan')
+
+  console.log('we are here')
 
   const burger = await Product.create({ name: 'Vegan burger', category: 'food', brand: 'veggie', price: 20 })
   const veganPizza = await Product.create({ name: 'pizza', category: 'food', brand: 'aysebrand', price: 30 })
   const pinkShirt = await Product.create({ name: 'Pink Shirt', category: 'clothing', brand: 'zara', price: 100 })
 
+  console.log('neyzeni ariyorum', neyzen)
+  console.log('serkani ariyorum', funda)
+
   const burgerOrder = await Order.create({
-    orderItems: [{ item: veganPizza, quantity: 5 }],
+    orderItems: [{ item: burger, quantity: 5 }],
+    userId: neyzen,
+    amount: 0,
+  })
+  const order1 = await Order.create({
+    orderItems: [{ item: pinkShirt, quantity: 10 }],
     userId: funda,
     amount: 0,
   })
-  const order1 = await Order.create({ orderItems: [{ otem: pinkShirt, quantity: 10 }], userId: serkan, amount: 0 })
 
   const order2 = await Order.create({
     // eslint-disable-next-line no-underscore-dangle
-    orderItems: [{ item: burger, quantity: 2 }],
-    userId: neyzen,
+    orderItems: [{ item: veganPizza, quantity: 2 }],
+    userId: serkan,
     amount: 0,
   })
 
   // await order1.addProduct(veganPizza, 5)
-  // await order1.addProduct(pinkShirt, 3)
-  // await burgerOrder.addProduct(burger, 2)
-  // await order2.addProduct(pinkShirt, 8)
+  // await burgerOrder.addProduct(pinkShirt, 2)
+  // await order2.addProduct(burger, 8)
 
   await order1.calculateAmount()
   await burgerOrder.calculateAmount()
   await order2.calculateAmount()
 
-  console.log(burgerOrder)
-  console.log(order1)
-  console.log(order2)
-
-  await neyzen.addOrder(burgerOrder)
+  await neyzen.addOrder(burgerOrder) // look at the mongoose post create so that I don't have to remember every user that order has.
   await funda.addOrder(order1)
   await serkan.addOrder(order2)
-
-  //
-
-  // const finalBurgerOrder = await Order.create({ orderItems: burgerOrder })
-
-  // await finalBurgerOrder.addProduct(burgerOrder)
-
-  // await neyzen.addOrder(burgerOrder) // Burda product ekliyorsun ama order eklemen lazim!!!!
-  // await serkan.addOrder(veganPizza)
-  // await funda.addOrder(pinkShirt)
 
   await funda.likeProduct(burger)
   await neyzen.likeProduct(veganPizza)
@@ -108,6 +106,31 @@ router.get('/:userId', async (req, res) => {
   if (user) res.send(user)
   else res.sendStatus(404)
 })
+
+// router.get('/:likes', async (req, res) => {
+//   const user = await User.findById(req.params.userId)
+//   const product = await Product.findById(req.params.productId)
+
+//   await user.likeProduct(product)
+//   res.sendStatus(200)
+// })
+
+router.get('/:userId/addresses', async (req, res) => {
+  const user = await User.findById(req.params.userId)
+  console.log('hi stephen', req.params.userId)
+
+  const { addresses } = user // - this is const addresses = user.addresses but mongoose prefers this structure.
+  // const addresses = await user.getAddresses() // I created a method in user.js for this function
+  res.send(addresses)
+})
+
+// router.get('/:orders', async (req, res) => {
+//   const user = await User.findById(req.params.userId)
+//   const order = await Order.findById(req.params.orderId)
+
+//   await user.addOrder(order)
+//   res.sendStatus(200)
+// })
 
 /* POST create a user */
 // router.post('/', async (req, res) => {
@@ -133,6 +156,21 @@ router.post('/:userId/likes', async (req, res) => {
   await user.likeProduct(product)
   res.sendStatus(200)
 })
+
+// router.post('/:userId/addresses', async (req, res) => {
+//   const user = await User.findById(req.params.userId)
+
+//   await user.addAddress(req.user.addresses) // - Bunu sor
+//   res.sendStatus(200)
+// })
+
+// router.post('/:orders', async (req, res) => {
+//   const user = await User.findById(req.params.userId)
+//   const order = await Order.findById(req.params.orderId)
+
+//   await user.addOrder(order)
+//   res.sendStatus(200)
+// })
 
 // router.get('/:userId', (req, res) => {
 //   res.send(users[req.params.userId])
