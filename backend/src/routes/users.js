@@ -33,9 +33,9 @@ router.get('/', async (req, res) => {
 })
 
 router.get('/initialize', async (req, res) => {
-  // await User.remove({})
-  // await Order.remove({})
-  // await Product.remove({})
+  await User.remove({})
+  await Order.remove({})
+  await Product.remove({})
 
   const neyzen = await User.create({ name: 'Neyzen', age: 30, email: 'neyzen@coyotiv.com' })
   await neyzen.setPassword('test')
@@ -61,33 +61,33 @@ router.get('/initialize', async (req, res) => {
 
   const burgerOrder = await Order.create({
     orderItems: [{ item: burger, quantity: 5 }],
-    userId: neyzen,
+    userId: neyzen._id,
     amount: 0,
   })
-  const order1 = await Order.create({
-    orderItems: [{ item: pinkShirt, quantity: 10 }],
-    userId: funda,
-    amount: 0,
-  })
+  // const order1 = await Order.create({
+  //   orderItems: [{ item: pinkShirt, quantity: 10 }],
+  //   userId: funda,
+  //   amount: 0,
+  // })
 
-  const order2 = await Order.create({
-    // eslint-disable-next-line no-underscore-dangle
-    orderItems: [{ item: veganPizza, quantity: 2 }],
-    userId: serkan,
-    amount: 0,
-  })
+  // const order2 = await Order.create({
+  //   // eslint-disable-next-line no-underscore-dangle
+  //   orderItems: [{ item: veganPizza, quantity: 2 }],
+  //   userId: serkan,
+  //   amount: 0,
+  // })
 
   // await order1.addProduct(veganPizza, 5)
   // await burgerOrder.addProduct(pinkShirt, 2)
   // await order2.addProduct(burger, 8)
 
-  await order1.calculateAmount()
+  // await order1.calculateAmount()
   await burgerOrder.calculateAmount()
-  await order2.calculateAmount()
+  // await order2.calculateAmount()
 
   await neyzen.addOrder(burgerOrder) // look at the mongoose post create so that I don't have to remember every user that order has.
-  await funda.addOrder(order1)
-  await serkan.addOrder(order2)
+  // await funda.addOrder(order1)
+  // await serkan.addOrder(order2)
 
   await funda.likeProduct(burger)
   await neyzen.likeProduct(veganPizza)

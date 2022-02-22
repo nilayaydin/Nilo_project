@@ -10,17 +10,17 @@ router.get('/', async (req, res) => {
   res.send(orders)
 })
 
-router.post('/', async (req, res) => {
-  const { orderItems } = req.body
-  const userId = await User.findById(req.params.userId)
+// router.post('/', async (req, res) => {
+//   const { orderItems } = req.body
+//   const userId = await User.findById(req.params.userId)
 
-  // eslint-disable-next-line no-underscore-dangle
-  // const userId = req.user._id
-  const createdOrder = new Order({ userId, orderItems })
+//   // eslint-disable-next-line no-underscore-dangle
+//   // const userId = req.user._id
+//   const createdOrder = new Order({ userId, orderItems })
 
-  await createdOrder.calculateAmount()
+//   await createdOrder.calculateAmount()
 
-  res.send(createdOrder)
-})
+//   res.send(createdOrder)
+// })
 
 module.exports = router
