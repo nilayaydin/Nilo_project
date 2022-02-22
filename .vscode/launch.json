@@ -9,7 +9,11 @@
       "request": "launch",
       "name": "Launch Program",
       "skipFiles": ["<node_internals>/**"],
-      "program": "${workspaceFolder}/homework.js"
+      "program": "${workspaceFolder}/backend/src/app.js",
+      "console": "integratedTerminal",
+      "env": {
+        "MONGODB_CONNECTION_STRING": "mongodb+srv://root:Noceo4k16Jp8BaVF@veganzimu.tztio.mongodb.net/Veganzimu?retryWrites=true&w=majority"
+      }
     }
   ]
 }
