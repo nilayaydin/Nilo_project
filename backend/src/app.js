@@ -107,6 +107,6 @@ app.use((err, req, res) => {
 })
 
 // eslint-disable-next-line no-console
-console.log('im dead')
+console.log('this is testing app.js')
 
 module.exports = app
