@@ -22,7 +22,7 @@ const orderSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     autopopulate: { maxDepth: 1 },
-    // required: true,
+    required: true,
   },
   amount: {
     type: Number,
