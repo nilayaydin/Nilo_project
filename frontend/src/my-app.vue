@@ -1,5 +1,5 @@
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 
 export default {
   name: 'App',
@@ -10,37 +10,57 @@ export default {
       this.$router.push('/login')
     },
   },
+  computer: {
+    ...mapState(['user']),
+  },
 }
 </script>
+
 <template lang="pug">
   #app
     #nav
-      router-link(to="/profile") Profile
-      router-link(to="/login") Login
-      router-link(to="/register") Register
-      a(@click="doLogout" href="#") Logout
+      .logo
+        router-link(to="/")
+         img(src="@/assets/veganzimu-logo.png")
+      .box
+        router-link(to="/") Home
+        router-link(to="/profile") Profile
+        router-link(to="/login") Login
+        router-link(to="/register") Register
+        a(@click="doLogout" href="#") Logout
     router-view
 </template>
 
 <style lang="scss">
+:root {
+  --pinkish: rgb(202, 158, 171);
+}
+body {
+  background-color: var(--pinkish);
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
+  padding: 20px;
 }
 
 #nav {
-  padding: 30px;
-
   a {
-    font-weight: bold;
-    color: #2c3e50;
-    margin: 0 1rem;
+    position: inline-block;
+    display: right;
+    justify-content: right;
+    padding: 20px 20px 20px 20px;
+    font-size: 23px;
 
     &.router-link-exact-active {
-      color: #42b983;
+      color: #3b7a21;
     }
+  }
+
+  img {
+    width: 250px;
+    height: 250px;
   }
 }
 </style>
