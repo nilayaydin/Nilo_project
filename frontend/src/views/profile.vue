@@ -8,13 +8,13 @@ export default {
   components: { Counter },
   data() {
     return {
-      users: [],
+      users: [], // I have to create an empty array to work on that
       message: '',
     }
   },
   async created() {
     this.users = await this.fetchUsers()
-    await this.createOrder({ orderItems: [] })
+    // await this.createOrder({ orderItems: [] })
   },
   methods: {
     ...mapActions(['fetchUsers', 'goLive', 'sendMessageToLiveStream', 'joinStream', 'createOrder']),
@@ -28,22 +28,11 @@ export default {
     ...mapState(['currentLiveStream', 'liveStreams', 'user', 'liveStreamMessages']),
   },
 }
-//   data2() {
-//     return {
-//       products: [],
-//     }
-//   },
-//   async created2() {
-//     const productsRequest = await axios.get('/api/products')
-
-//     this.products = productsRequest.data2
-//   },
-// }
 </script>
 
 <template lang="pug">
   .home
-    h1 Veganzimu {{ user.name }}
+    h1 Welcome {{ user.name }}
     h2 Users
     div(v-for="user in users" :user = "user")
       router-link(:to="`/users/${user._id}`") {{ user.name }}
@@ -65,3 +54,6 @@ export default {
         input(type="text" v-model="message")
         input(type="submit" value="Send Message")
 </template>
+
+// data2() { // return { // products: [], // } // }, // async created2() { // const productsRequest = await
+axios.get('/api/products') // this.products = productsRequest.data2 // }, // }
