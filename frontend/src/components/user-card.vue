@@ -1,4 +1,6 @@
 <script>
+// Is this working?
+
 export default {
   name: 'UserCard',
   props: ['user'],
@@ -15,6 +17,7 @@ export default {
   .box(v-for="order in user.orders")
     ul(v-for="orderItem in order.orderItems")
       li {{ orderItem.item.name }}
+
 
 </template>
 

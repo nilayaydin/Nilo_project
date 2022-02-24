@@ -12,7 +12,7 @@ let connectionString = process.env.MONGODB_CONNECTION_STRING
 console.log('This is testing connection string', connectionString)
 
 if (!connectionString) {
-  connectionString = `mongodb+srv://${username}:${password}@veganzimu.tztio.mongodb.net/${dbName}?retryWrites=true&w=majority`
+  connectionString = `mongodb+srv://${username}:${password}@veganzimu.wisd5.mongodb.net/${dbName}?retryWrites=true&w=majority`
 }
 
 console.log(connectionString)
