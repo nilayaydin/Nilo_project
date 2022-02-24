@@ -3,7 +3,7 @@ import VueRouter from 'vue-router'
 import Profile from '../views/profile.vue'
 import Login from '../views/login.vue'
 import Register from '../views/register.vue'
-
+import Home from '../views/home.vue'
 Vue.use(VueRouter)
 
 export default function init(store) {
@@ -13,8 +13,8 @@ export default function init(store) {
     routes: [
       {
         path: '/',
-        name: 'Profile',
-        component: Profile,
+        name: 'Home',
+        component: Home,
       },
       {
         path: '/users/:id',
@@ -26,7 +26,7 @@ export default function init(store) {
       },
       {
         path: '/register',
-        name: 'register',
+        name: 'Register',
         component: Register,
         beforeEnter(to, from, next) {
           if (store.state.user) return next('/profile')
@@ -35,7 +35,7 @@ export default function init(store) {
       },
       {
         path: '/login',
-        name: 'login',
+        name: 'Login',
         component: Login,
         beforeEnter(to, from, next) {
           if (store.state.user) return next('/profile')
@@ -44,7 +44,7 @@ export default function init(store) {
       },
       {
         path: '/profile',
-        name: 'profile',
+        name: 'Profile',
         component: Profile,
         beforeEnter(to, from, next) {
           if (!store.state.user) return next('/login')
