@@ -43,7 +43,7 @@ export default {
     div Don't have an account yet? <router-link to="/register">Register</router-link>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
 label {
   display: block;
   margin: 1rem 0;
