@@ -32,9 +32,6 @@ export default {
                 p {{ user.name }}
 
 
-
-
-
 </template>
 
 <style lang="scss" scoped>
