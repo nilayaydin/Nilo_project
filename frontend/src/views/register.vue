@@ -9,6 +9,7 @@ export default {
       age: null,
       email: '',
       password: '',
+      address: '',
 
       backendError: null,
     }
@@ -22,6 +23,7 @@ export default {
         await this.register({
           name: this.name,
           age: this.age,
+          address: this.address,
           email: this.email,
           password: this.password,
         })
@@ -43,6 +45,8 @@ export default {
         input(v-model="name" id="name" type="text" placeholder="Your name" required)
       label(for="age") Age:&nbsp;
         input(v-model="age" id="age" type="number" placeholder="Your age" required)
+      label(for="address") Address:&nbsp;
+        input(v-model="adress" id="address" type="text" placeholder="Your address" required)
       label(for="email") Email:&nbsp;
         input(v-model="email" id="email" type="email" placeholder="Your email" required)
       label(for="password") Password:&nbsp;
