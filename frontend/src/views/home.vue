@@ -34,6 +34,8 @@ export default {
 </template>
 
 <style lang="scss">
+@import '@/assets/theme.scss';
+@import 'bootstrap/scss/bootstrap.scss';
 #app {
   background-color: linear-gradient(to right, rgb(202, 158, 171), rgb(199, 138, 149));
 }
