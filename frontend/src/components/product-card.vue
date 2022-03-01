@@ -1,17 +1,29 @@
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 
 export default {
   name: 'ProductCard',
   props: ['product'],
+  data() {
+    return {
+      quantity: 1,
+    }
+  },
+  computed: {
+    ...mapState(['user']),
+  },
   methods: {
     ...mapActions(['createOrder']),
     async onOrderNow() {
-      await this.createOrder({ orderItems: [{ item: this.product._id, quantity: 1 }] })
+      const user = this.user
+      if (!user) {
+        alert('you need to log in to order!')
+      }
+      await this.createOrder({ orderItems: [{ item: this.product._id, quantity: this.quantity }] })
       alert('order is successfully placed')
     },
-    onAddToCard() {
-      alert('card is coming soon')
+    onAddToCart() {
+      return alert('cart is coming soon')
     },
   },
 }
@@ -26,7 +38,8 @@ export default {
     p Price: {{ product.price }}₺
     p Category: {{ product.category }}
     img(:src="require(`@/assets/${product.photo}`)")
-    button(@click="onAddToCard") Add to card
+    input(v-model="quantity" id="quantity" type="number" placeholder="quantity" required)
+    button(@click="onAddToCart") Add to cart
     button(@click="onOrderNow") Order Now
 
 </template>
@@ -42,6 +55,10 @@ export default {
   img {
     width: 100px;
     height: 100px;
+  }
+  input {
+    height: 50px;
+    width: 50px;
   }
 }
 </style>
