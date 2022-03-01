@@ -116,9 +116,10 @@ const store = new Vuex.Store({
       socket.emit('join stream', stream)
       commit(mutations.SET_LIVE_STREAM, stream)
     },
-    async createOrder({ orderItems }) {
+    async createOrder(store, { orderItems }) {
+      console.log('order items in frontend', orderItems)
       await axios.post('/api/orders', { orderItems })
-    },
+    }, // This place the order. If you want to add products you should ass another function for that. Create chart.
   },
   modules: {},
 })
