@@ -31,6 +31,7 @@ export default {
 </script>
 
 <template lang="pug">
+#app
   .home
     h1 Welcome {{ user.name }}
     h2 Users
@@ -55,5 +56,13 @@ export default {
         input(type="submit" value="Send Message")
 </template>
 
+<style lang="scss">
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: rgb(202, 158, 171);
+}
+</style>
 // data2() { // return { // products: [], // } // }, // async created2() { // const productsRequest = await
 axios.get('/api/products') // this.products = productsRequest.data2 // }, // }
