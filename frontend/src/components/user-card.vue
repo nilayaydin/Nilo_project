@@ -12,7 +12,7 @@ export default {
   h1 {{ user.name }} ({{ user.age }})
   .infoaddresses(v-for="address in user.addresses")
     p Address: {{ address || 'This user has no adress.' }}
-    h4 Orders: {{ user.orders.length }}
+  h4 Orders: {{ user.orders.length }}
 
   .order-info(v-for="order in user.orders")
     ul(v-for="orderItem in order.orderItems")
