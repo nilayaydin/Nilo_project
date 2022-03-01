@@ -13,17 +13,21 @@ router.get('/', async (req, res) => {
 })
 
 router.post('/', async (req, res) => {
-  const { orderItems, product } = req.body
+  const { orderItems } = req.body
 
-  const createdOrder = await Order.create({ orderItems, amount: 0 })
+  console.log('looking for orderItems', orderItems)
+
+  const userId = req.user._id
+  console.log('trying to find userId', userId)
+
+  const createdOrder = await Order.create({ orderItems, userId, amount: 0 })
 
   // eslint-disable-next-line no-underscore-dangle
 
   const order = await Order.findById(createdOrder._id)
-  const getProduct = await Product.findById(product._id)
 
-  await order.addProduct(getProduct)
   await order.calculateAmount()
+  await req.user.addOrder(order)
 
   res.send(order)
 })
