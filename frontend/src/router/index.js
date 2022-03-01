@@ -4,6 +4,7 @@ import Profile from '../views/profile.vue'
 import Login from '../views/login.vue'
 import Register from '../views/register.vue'
 import Home from '../views/home.vue'
+
 Vue.use(VueRouter)
 
 export default function init(store) {
@@ -16,6 +17,7 @@ export default function init(store) {
         name: 'Home',
         component: Home,
       },
+
       {
         path: '/users/:id',
         name: 'UserDetail',

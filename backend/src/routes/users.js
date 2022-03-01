@@ -52,15 +52,31 @@ router.get('/initialize', async (req, res) => {
 
   console.log('we are here')
 
-  const burger = await Product.create({ name: 'Vegan burger', category: 'food', brand: 'veggie', price: 20 })
-  const veganPizza = await Product.create({ name: 'pizza', category: 'food', brand: 'aysebrand', price: 30 })
-  const pinkShirt = await Product.create({ name: 'Pink Shirt', category: 'clothing', brand: 'zara', price: 100 })
+  const burger = await Product.create({ name: 'Vegan Burger', category: 'food', brand: 'Veggie', price: 20 })
+  const veganPizza = await Product.create({ name: 'Vegan Pizza', category: 'food', brand: 'Pizza V', price: 30 })
+  const pinkShirt = await Product.create({ name: 'Shirt', category: 'clothing', brand: 'Zara', price: 100 })
+  const burrito = await Product.create({ name: 'Vegan Burrito', category: 'food', brand: 'Binevideli', price: 50 })
+  const boots = await Product.create({ name: 'Vegan Boots', category: 'clothing', brand: 'Dr.Martens', price: 1500 })
+  const mascara = await Product.create({
+    name: 'Vegan Mascara',
+    category: 'cosmetics',
+    brand: 'Ethical Elephant',
+    price: 100,
+  })
+
+  await burger.addPhoto('vegan-burger.png')
+  await veganPizza.addPhoto('vegan-pizza.png')
+  await pinkShirt.addPhoto('pink-shirt.png')
+  await burrito.addPhoto('vegan-burrito.png')
+  await boots.addPhoto('dr-martens.png')
+  await mascara.addPhoto('mascara.png')
 
   console.log('neyzeni ariyorum', neyzen)
   console.log('serkani ariyorum', funda)
 
   const burgerOrder = await Order.create({
     orderItems: [{ item: burger, quantity: 5 }],
+    // eslint-disable-next-line no-underscore-dangle
     userId: neyzen._id,
     amount: 0,
   })

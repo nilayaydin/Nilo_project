@@ -4,7 +4,7 @@ import ProductCard from '@/components/product-card.vue'
 import { mapActions } from 'vuex'
 
 export default {
-  name: 'Home',
+  name: 'ProductList',
   components: { ProductCard },
   data() {
     return {
@@ -20,37 +20,29 @@ export default {
 }
 </script>
 
-<template lang="pug">
-#app
-  .header
-    h1 Products
-  .container
-    .row
-      div(v-for="product in products" :product="product" class="col-12 col-md-6 col-lg-4")
-        ProductCard(:product="product" v-if="product")
-  .footer
-    p This website is named after my best friend, Fundazimu <3
-
+<template>
+  <div id="app">
+    <div class="header">
+      <h1>Products</h1>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div v-for="product of products" :key="product" class="col-12 col-md-6 col-lg-4">
+          <ProductCard :product="product" />
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <style lang="scss">
 @import '@/assets/theme.scss';
 @import 'bootstrap/scss/bootstrap.scss';
-#app {
-  background-color: linear-gradient(to right, rgb(202, 158, 171), rgb(199, 138, 149));
-}
 
 .header {
   padding: 60px;
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-.footer {
-  bottom: 0;
-  width: 100%;
-  height: 60px; /* Height of the footer */
-  align-items: right;
 }
 </style>

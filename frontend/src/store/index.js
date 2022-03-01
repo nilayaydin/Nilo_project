@@ -44,6 +44,7 @@ const store = new Vuex.Store({
       state.count++
     },
     [mutations.SET_USER](state, user) {
+      console.log('user in store', user)
       state.user = user
     },
     [mutations.SET_LIVE_STREAM](state, live) {
@@ -67,6 +68,14 @@ const store = new Vuex.Store({
     async fetchUsers() {
       const usersRequest = await axios.get('/api/users')
       return usersRequest.data
+    },
+    async fetchProducts() {
+      const productRequest = await axios.get('api/products')
+      return productRequest.data
+    },
+    async fetchProduct() {
+      const productRequest = await axios.get(`/api/products/${id}`)
+      return productRequest.data
     },
     async fetchSession({ commit }) {
       const user = await axios.get('/api/accounts/session')
@@ -107,9 +116,10 @@ const store = new Vuex.Store({
       socket.emit('join stream', stream)
       commit(mutations.SET_LIVE_STREAM, stream)
     },
-    async createOrder({ commit }, { orderItems }) {
+    async createOrder(store, { orderItems }) {
+      console.log('order items in frontend', orderItems)
       await axios.post('/api/orders', { orderItems })
-    },
+    }, // This place the order. If you want to add products you should ass another function for that. Create chart.
   },
   modules: {},
 })

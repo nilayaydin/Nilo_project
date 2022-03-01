@@ -1,5 +1,6 @@
 <script>
 import { mapActions, mapState } from 'vuex'
+import axios from 'axios'
 
 export default {
   name: 'App',
@@ -10,7 +11,7 @@ export default {
       this.$router.push('/login')
     },
   },
-  computer: {
+  computed: {
     ...mapState(['user']),
   },
 }
@@ -24,10 +25,10 @@ export default {
          img(src="@/assets/veganzimu-logo.png")
       .box
         router-link(to="/") Home
-        router-link(to="/profile") Profile
-        router-link(to="/login") Login
-        router-link(to="/register") Register
-        a(@click="doLogout" href="#") Logout
+        router-link(to="/profile" v-if="user") Profile
+        router-link(to="/login" v-if="!user") Login
+        router-link(to="/register" v-if="!user") Register
+        a(@click="doLogout" href="#" v-if="user") Logout
     router-view
 </template>
 
@@ -35,17 +36,21 @@ export default {
 :root {
   --pinkish: rgb(202, 158, 171);
 }
-body {
-  background-color: var(--pinkish);
-}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   padding: 20px;
+  background-color: rgb(202, 158, 171);
 }
 
 #nav {
+  padding: 30px;
+  justify-content: flex-start;
+  flex: 1;
+  text-align: right;
+
   a {
     position: inline-block;
     display: right;
@@ -61,6 +66,9 @@ body {
   img {
     width: 250px;
     height: 250px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
   }
 }
 </style>
