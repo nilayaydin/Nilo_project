@@ -24,6 +24,13 @@ router.get('/', async (req, res) => {
   res.send(await Product.find(query))
 })
 
+router.get('/:productId', async (req, res) => {
+  const product = await Product.findById(req.params.productId)
+
+  if (product) res.send(product)
+  else res.sendStatus(404)
+})
+
 router.post('/', async (req, res) => {
   const createProduct = await Product.create(req.body)
 

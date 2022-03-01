@@ -18,12 +18,7 @@ const productSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  photos: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      autopopulate: true,
-    },
-  ],
+  photo: String,
   likedBy: [
     {
       type: mongoose.Schema.Types.ObjectId,
@@ -33,8 +28,9 @@ const productSchema = new mongoose.Schema({
   ],
 })
 class Product {
-  async addPhoto(photo) {
-    this.photos.push(photo)
+  async addPhoto(photoName) {
+    this.photo = photoName
+
     await this.save()
   }
 }
