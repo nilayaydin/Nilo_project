@@ -1,44 +1,54 @@
 <script>
-import UserCard from '@/components/user-card.vue'
-import { mapActions, mapState } from 'vuex'
+// import Counter from '@/components/counter.vue'
+import ProductCard from '@/components/product-card.vue'
+import { mapActions } from 'vuex'
 
 export default {
   name: 'Home',
-  components: {},
+  components: { ProductCard },
   data() {
     return {
-      users: [],
+      products: [],
     }
   },
   async created() {
-    this.users = await this.fetchUsers()
+    this.products = await this.fetchProducts()
   },
   methods: {
-    ...mapActions(['fetchUsers']),
-  },
-  computed: {
-    ...mapState(['user']),
+    ...mapActions(['fetchProducts']),
   },
 }
 </script>
 
 <template lang="pug">
-    .home
-        .container1
-            .div
-             h1 Welcome to Veganzimu!
-             h2 The users are listed below
-             .div(v-for="user in users")
-                p {{ user.name }}
-
+#app
+  .header
+    h1 Products
+  .container
+    .row
+      div(v-for="product in products" :product="product" class="col-12 col-md-6 col-lg-4")
+        ProductCard(:product="product" v-if="product")
+  .footer
+    p This website is named after my best friend, Fundazimu <3
 
 </template>
 
-<style lang="scss" scoped>
-.home {
+<style lang="scss">
+#app {
+  background-color: linear-gradient(to right, rgb(202, 158, 171), rgb(199, 138, 149));
+}
+
+.header {
+  padding: 60px;
   display: flex;
-  padding-top: 50px;
-  align-content: center;
-  text-align: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.footer {
+  bottom: 0;
+  width: 100%;
+  height: 60px; /* Height of the footer */
+  align-items: right;
 }
 </style>
