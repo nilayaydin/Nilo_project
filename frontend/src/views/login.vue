@@ -21,7 +21,7 @@ export default {
           password: this.password,
         })
 
-        this.$router.push('/profile')
+        this.$router.push('/')
       } catch (e) {
         this.backendError = e.response.data.message
       }
@@ -43,7 +43,7 @@ export default {
     div Don't have an account yet? <router-link to="/register">Register</router-link>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 label {
   display: block;
   margin: 1rem 0;
