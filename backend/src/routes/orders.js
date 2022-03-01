@@ -3,24 +3,29 @@ const express = require('express')
 const router = express.Router()
 const Order = require('../models/order')
 const User = require('../models/user')
+const Product = require('../models/product')
 
 router.get('/', async (req, res) => {
-  const orders = await Order.find()
+  const orders = await Order.find({}) // change the line 10th to this
+  // const orders = await Order.find({})
 
   res.send(orders)
 })
 
-// router.post('/', async (req, res) => {
-//   const { orderItems } = req.body
-//   const userId = await User.findById(req.params.userId)
+router.post('/', async (req, res) => {
+  const { orderItems, product } = req.body
 
-//   // eslint-disable-next-line no-underscore-dangle
-//   // const userId = req.user._id
-//   const createdOrder = new Order({ userId, orderItems })
+  const createdOrder = await Order.create({ orderItems, amount: 0 })
 
-//   await createdOrder.calculateAmount()
+  // eslint-disable-next-line no-underscore-dangle
 
-//   res.send(createdOrder)
-// })
+  const order = await Order.findById(createdOrder._id)
+  const getProduct = await Product.findById(product._id)
+
+  await order.addProduct(getProduct)
+  await order.calculateAmount()
+
+  res.send(order)
+})
 
 module.exports = router
