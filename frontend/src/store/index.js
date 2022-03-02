@@ -70,12 +70,20 @@ const store = new Vuex.Store({
       return usersRequest.data
     },
     async fetchProducts() {
-      const productRequest = await axios.get('api/products')
+      const productRequest = await axios.get('/api/products')
       return productRequest.data
     },
-    async fetchProduct() {
+    async fetchProduct(store, id) {
       const productRequest = await axios.get(`/api/products/${id}`)
       return productRequest.data
+    },
+    async fetchOrders() {
+      const orderRequest = await axios.get('/api/orders')
+      return orderRequest.data
+    },
+    async fetchOrders(store, id) {
+      const orderRequest = await axios.get(`/api/orders/${id}`)
+      return orderRequest.data
     },
     async fetchSession({ commit }) {
       const user = await axios.get('/api/accounts/session')
@@ -119,8 +127,14 @@ const store = new Vuex.Store({
     async createOrder(store, { orderItems }) {
       console.log('order items in frontend', orderItems)
       await axios.post('/api/orders', { orderItems })
-    }, // This place the order. If you want to add products you should ass another function for that. Create chart.
+    }, // This place the order. If you want to add products you should add another function for that. Create chart.
+    async addAddress(store, { address }) {
+      console.log('furkanin logu', address)
+      const userId = store.state.user._id
+      await axios.post(`/api/users/${userId}/addresses`, { address })
+    },
   },
+
   modules: {},
 })
 
