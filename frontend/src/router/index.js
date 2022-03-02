@@ -20,6 +20,12 @@ export default function init(store) {
       },
 
       {
+        path: '/product',
+        name: 'Product',
+        component: () => import(/* webpackChunkName: "about" */ '../views/user-detail.vue'),
+      },
+
+      {
         path: '/users/:id',
         name: 'UserDetail',
         // route level code-splitting

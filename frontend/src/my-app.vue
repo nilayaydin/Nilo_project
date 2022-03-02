@@ -25,6 +25,7 @@ export default {
          img(src="@/assets/veganzimu-logo.png")
       .box
         router-link(to="/") Home
+        router-link(to="/product") Product
         router-link(to="/profile" v-if="user") Profile
         router-link(to="/login" v-if="!user") Login
         router-link(to="/register" v-if="!user") Register
