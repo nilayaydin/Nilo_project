@@ -16,14 +16,14 @@ const userSchema = new mongoose.Schema({
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Order',
-      autopopulate: { maxDepth: 3 },
+      autopopulate: { maxDepth: 2 },
     },
   ],
   likesProduct: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Product',
-      autopopulate: { maxDepth: 1 },
+      autopopulate: { maxDepth: 2 },
     },
   ],
 })
