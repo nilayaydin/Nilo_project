@@ -29,6 +29,7 @@ const mutations = {
   SET_LIVE_STREAM: 'set live stream',
   ADD_LIVE_STREAM: 'add live stream',
   ADD_MESSAGE_TO_LIVE_STREAM: 'add message to live stream',
+  SET_PRODUCTS: 'set products',
 }
 
 const store = new Vuex.Store({
@@ -38,6 +39,7 @@ const store = new Vuex.Store({
     currentLiveStream: null,
     liveStreams: [],
     liveStreamMessages: [],
+    products: [],
   },
   mutations: {
     [mutations.INCREMENT_COUNT](state) {
@@ -55,6 +57,9 @@ const store = new Vuex.Store({
     },
     [mutations.ADD_MESSAGE_TO_LIVE_STREAM](state, message) {
       state.liveStreamMessages.push(message)
+    },
+    [mutations.SET_PRODUCTS](state, products) {
+      state.products = products
     },
   },
   actions: {
@@ -111,6 +116,10 @@ const store = new Vuex.Store({
     },
     async addLiveStream({ commit }, stream) {
       commit(mutations.ADD_LIVE_STREAM, stream)
+    },
+    async setProducts({ commit }, products) {
+      this.state.products = await axios.get('/api/products')
+      commit(mutations.SET_PRODUCTS, products.data || null)
     },
     async sendMessageToLiveStream({ state, commit }, body) {
       const message = {
