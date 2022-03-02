@@ -4,45 +4,25 @@ import ProductCard from '@/components/product-card.vue'
 import { mapActions } from 'vuex'
 
 export default {
-  name: 'ProductList',
+  name: 'ProductDetail',
   components: { ProductCard },
   data() {
     return {
-      products: [],
+      product: null,
     }
   },
   async created() {
-    this.products = await this.fetchProducts()
+    this.product = await this.fetchProduct(this.$route.params.id)
+    console.log('product gelcek mi bakalim', this.product)
   },
   methods: {
-    ...mapActions(['fetchProducts']),
+    ...mapActions(['fetchProduct']),
   },
 }
 </script>
 
-<template>
-  <div id="app">
-    <div class="header">
-      <h1>Products</h1>
-    </div>
-    <div class="container">
-      <div class="row">
-        <div v-for="product of products" :key="product" class="col-12 col-md-6 col-lg-4">
-          <ProductCard :product="product" />
-        </div>
-      </div>
-    </div>
-  </div>
+<template lang="pug">
+  .about
+    h1 This is product detail
+    ProductCard(:product="product")
 </template>
-
-<style lang="scss">
-@import '@/assets/theme.scss';
-@import 'bootstrap/scss/bootstrap.scss';
-
-.header {
-  padding: 60px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-</style>
