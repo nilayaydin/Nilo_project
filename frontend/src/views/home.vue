@@ -1,7 +1,7 @@
 <script>
 // import Counter from '@/components/counter.vue'
 import ProductCard from '@/components/product-card.vue'
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 
 export default {
   name: 'Home',
@@ -17,12 +17,16 @@ export default {
   methods: {
     ...mapActions(['fetchProducts']),
   },
+  computed: {
+    ...mapState(['user']),
+  },
 }
 </script>
 
 <template lang="pug">
 #app
   .header
+    h1(v-if="user") Welcome {{ user.name }}
     h1 Products
   .container
     .row

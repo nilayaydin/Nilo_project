@@ -1,21 +1,12 @@
 <script>
 // @ is an alias to /src
 import Counter from '@/components/counter.vue'
+import UserCard from '@/components/user-card.vue'
 import { mapActions, mapState } from 'vuex'
 
 export default {
   name: 'Profile',
-  components: { Counter },
-  data() {
-    return {
-      users: [], // I have to create an empty array to work on that
-      message: '',
-    }
-  },
-  async created() {
-    this.users = await this.fetchUsers()
-    // await this.createOrder({ orderItems: [] })
-  },
+  components: { Counter, UserCard },
   methods: {
     ...mapActions(['fetchUsers', 'goLive', 'sendMessageToLiveStream', 'joinStream', 'createOrder']),
     sendMessage(e) {
@@ -33,10 +24,7 @@ export default {
 <template lang="pug">
 #app
   .home
-    h1 Welcome {{ user.name }}
-    h2 Users
-    div(v-for="user in users" :user = "user")
-      router-link(:to="`/users/${user._id}`") {{ user.name }}
+    UserCard(:user="user" v-if="user")
     Counter
     div(v-if="liveStreams.length > 0")
       h2 Live Streams
