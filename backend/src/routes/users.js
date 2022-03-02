@@ -123,12 +123,11 @@ router.get('/:userId', async (req, res) => {
   else res.sendStatus(404)
 })
 
-// router.get('/:likes', async (req, res) => {
+// router.get(':/userId/likes', async (req, res) => {
 //   const user = await User.findById(req.params.userId)
-//   const product = await Product.findById(req.params.productId)
+//   const likeProduct = user.likesProduct
 
-//   await user.likeProduct(product)
-//   res.sendStatus(200)
+//   res.send(likeProduct)
 // })
 
 router.get('/:userId/addresses', async (req, res) => {
@@ -165,12 +164,16 @@ router.post('/', async (req, res) => {
   res.send(createdUser)
 })
 
-router.post('/:userId/likes', async (req, res) => {
-  const user = await User.findById(req.params.userId)
-  const product = await Product.findById(req.body.productId)
+router.post('/:userId/addresses', async (req, res) => {
+  const { user } = req
+  const { address } = req.body
 
-  await user.likeProduct(product)
-  res.sendStatus(200)
+  try {
+    await user.addAddress(address)
+    res.sendStatus(200)
+  } catch (e) {
+    res.sendStatus(400).send(e)
+  }
 })
 
 // router.post('/:userId/addresses', async (req, res) => {

@@ -6,9 +6,12 @@ export default {
   props: ['product'],
   data() {
     return {
-      quantity: 1,
+      quantity: Number,
     }
   },
+  // async created() {
+  //   this.quantity = await this.fetchOrders()
+  // },
   computed: {
     ...mapState(['user']),
   },
@@ -20,6 +23,7 @@ export default {
         alert('you need to log in to order!')
       }
       await this.createOrder({ orderItems: [{ item: this.product._id, quantity: this.quantity }] })
+
       alert('order is successfully placed')
     },
     onAddToCart() {
@@ -29,18 +33,18 @@ export default {
 }
 </script>
 
-// create input element, we type number in here. Then I would use v-model to make it interactive.
-
 <template lang="pug">
-  .product-card
-    h4 {{ product.name }}
+  .product-card(v-if="product")
+    div
+      router-link(:to="`/products/${product._id}`") {{ product.name }}
     p {{ product.brand }}
     p Price: {{ product.price }}₺
     p Category: {{ product.category }}
     img(:src="require(`@/assets/${product.photo}`)")
-    input(v-model="quantity" id="quantity" type="number" placeholder="quantity" required)
-    button(@click="onAddToCart") Add to cart
-    button(@click="onOrderNow") Order Now
+    div
+      input(v-model="quantity" id="quantity" type="number" placeholder="Quantity" required)
+      button(@click="onAddToCart") Add to cart
+      button(@click="onOrderNow") Order Now
 
 </template>
 
@@ -57,8 +61,9 @@ export default {
     height: 100px;
   }
   input {
-    height: 50px;
-    width: 50px;
+    height: 25px;
+    width: 90px;
+    margin: 10px;
   }
 }
 </style>
