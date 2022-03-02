@@ -35,8 +35,10 @@ export default {
   .liked-products(v-for="product in user.likesProduct")
     h4 Liked Products:
     li {{ product.name }} ( {{ product.brand }} )
+
   .addAddress
-  label(for="addresses") Create Address
+  label(for="addresses")
+    h4 Create Address
     input(v-model="address", id="address", type="text", placeholder="type here")
     button(@click="createAddress") Submit
 
