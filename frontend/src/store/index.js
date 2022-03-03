@@ -155,6 +155,11 @@ const store = new Vuex.Store({
       const userId = store.state.user._id
       await axios.post(`/api/users/${userId}/addresses`, { address })
     },
+    async likesProduct(store, { product }) {
+      console.log('furkanin producti', product)
+      const userId = store.state.user._id
+      await axios.post(`/api/users/${userId}/likes`, { product })
+    },
   },
 
   modules: {},
