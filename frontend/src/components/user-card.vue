@@ -1,6 +1,6 @@
 <script>
 // Is this working?
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 
 export default {
   name: 'UserCard',
@@ -16,6 +16,9 @@ export default {
       await this.addAddress({ address: this.address })
       alert('Address is successfully added!')
     },
+  },
+  computed: {
+    ...mapState(['cart']),
   },
 }
 </script>
@@ -37,10 +40,18 @@ export default {
     li {{ product.name }} ( {{ product.brand }} )
 
   .addAddress
-  label(for="addresses")
+    label(for="addresses")
     h4 Create Address
     input(v-model="address", id="address", type="text", placeholder="type here")
     button(@click="createAddress") Submit
+
+  .cart
+    h4 Cart:
+    div(v-for="orderItem in cart.orderItems")
+      p {{ orderItem.item.name}} x {{ orderItem.quantity }}
+
+
+
 
 </template>
 

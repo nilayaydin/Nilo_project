@@ -29,7 +29,7 @@ const mutations = {
   SET_LIVE_STREAM: 'set live stream',
   ADD_LIVE_STREAM: 'add live stream',
   ADD_MESSAGE_TO_LIVE_STREAM: 'add message to live stream',
-  SET_PRODUCTS: 'set products',
+  UPDATE_CART_ORDER_ITEMS: 'update cart with order items',
 }
 
 const store = new Vuex.Store({
@@ -39,7 +39,7 @@ const store = new Vuex.Store({
     currentLiveStream: null,
     liveStreams: [],
     liveStreamMessages: [],
-    products: [],
+    cart: { orderItems: [] },
   },
   mutations: {
     [mutations.INCREMENT_COUNT](state) {
@@ -58,8 +58,8 @@ const store = new Vuex.Store({
     [mutations.ADD_MESSAGE_TO_LIVE_STREAM](state, message) {
       state.liveStreamMessages.push(message)
     },
-    [mutations.SET_PRODUCTS](state, products) {
-      state.products = products
+    [mutations.UPDATE_CART_ORDER_ITEMS](state, orderItems) {
+      state.cart.orderItems = orderItems
     },
   },
   actions: {
@@ -117,9 +117,22 @@ const store = new Vuex.Store({
     async addLiveStream({ commit }, stream) {
       commit(mutations.ADD_LIVE_STREAM, stream)
     },
-    async setProducts({ commit }, products) {
-      this.state.products = await axios.get('/api/products')
-      commit(mutations.SET_PRODUCTS, products.data || null)
+    async addToCart({ state, commit }, { product, quantity = 1 }) {
+      // check if vue supports mutable arrays in state
+      // simplify the code!!!!!
+      // in worst case try to libraries. Immer or immutable js
+      const currentOrderItems = state.cart.orderItems.slice()
+
+      const currentProductIndex = currentOrderItems.findIndex(orderItem => orderItem.item._id === product._id)
+      if (currentProductIndex !== -1) {
+        currentOrderItems.splice(currentProductIndex, 1, {
+          ...currentOrderItems[currentProductIndex],
+          quantity: currentOrderItems[currentProductIndex].quantity + quantity,
+        })
+      } else {
+        currentOrderItems.push({ item: product, quantity })
+      }
+      commit(mutations.UPDATE_CART_ORDER_ITEMS, currentOrderItems)
     },
     async sendMessageToLiveStream({ state, commit }, body) {
       const message = {
