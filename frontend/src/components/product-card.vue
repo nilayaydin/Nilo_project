@@ -9,14 +9,11 @@ export default {
       quantity: Number,
     }
   },
-  // async created() {
-  //   this.quantity = await this.fetchOrders()
-  // },
   computed: {
     ...mapState(['user']),
   },
   methods: {
-    ...mapActions(['createOrder']),
+    ...mapActions(['createOrder', 'fetchSession', 'addToCart']),
     async onOrderNow() {
       const user = this.user
       if (!user) {
@@ -24,10 +21,18 @@ export default {
       }
       await this.createOrder({ orderItems: [{ item: this.product._id, quantity: this.quantity }] })
 
+      //- p sonraki sayyafaya gitmek icin $router.push kullan.
+      // POSSIBLE IMPROVEMENTS
+      // optimistic ui update approach -- you dont wait for respond but update it.
+      // We don't need to fetch entire session. I only want to fetch orders again.
+      // I need a loading state when user hit the button, it should be disseppared so that they cannot order twice.
+      await this.fetchSession()
       alert('order is successfully placed')
     },
     onAddToCart() {
-      return alert('cart is coming soon')
+      this.addToCart({ product: this.product, quantity: 1 })
+      //- It only increases by one, the quantity should be selected!!
+      alert('items are added to the cart')
     },
   },
 }
@@ -45,6 +50,7 @@ export default {
       input(v-model="quantity" id="quantity" type="number" placeholder="Quantity" required)
       button(@click="onAddToCart") Add to cart
       button(@click="onOrderNow") Order Now
+
 
 </template>
 
