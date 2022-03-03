@@ -17,8 +17,8 @@ export default {
 
 <template lang="pug">
   .about
-    div(v-for="product in products" v-if="product")
+    div
     h1 This is a product detail
-    p {{ product.name }}
+
 
 </template>
