@@ -41,6 +41,7 @@ export default {
     },
     async likeProduct() {
       await this.likesProduct({ product: this.product._id })
+      await this.fetchSession()
     },
   },
 }
