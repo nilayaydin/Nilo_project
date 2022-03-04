@@ -13,7 +13,7 @@ export default {
     ...mapState(['user']),
   },
   methods: {
-    ...mapActions(['createOrder', 'fetchSession', 'addToCart']),
+    ...mapActions(['createOrder', 'fetchSession', 'addToCart', 'likesProduct']),
     async onOrderNow() {
       const user = this.user
       if (!user) {
@@ -30,9 +30,18 @@ export default {
       alert('order is successfully placed')
     },
     onAddToCart() {
+      const user = this.user
+      if (!user) {
+        alert('you need to log in to order!')
+      }
+
       this.addToCart({ product: this.product, quantity: 1 })
       //- It only increases by one, the quantity should be selected!!
       alert('items are added to the cart')
+    },
+    async likeProduct() {
+      await this.likesProduct({ product: this.product._id })
+      await this.fetchSession()
     },
   },
 }
@@ -50,6 +59,7 @@ export default {
       input(v-model="quantity" id="quantity" type="number" placeholder="Quantity" required)
       button(@click="onAddToCart") Add to cart
       button(@click="onOrderNow") Order Now
+      button(@click="likeProduct") Like Product
 
 
 </template>

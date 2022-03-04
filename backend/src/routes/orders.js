@@ -2,8 +2,6 @@ const express = require('express')
 
 const router = express.Router()
 const Order = require('../models/order')
-const User = require('../models/user')
-// const Product = require('../models/product')
 
 router.get('/', async (req, res) => {
   const orders = await Order.find() // change the line 10th to this
@@ -30,14 +28,13 @@ router.post('/', async (req, res) => {
   // eslint-disable-next-line no-console
   console.log('looking for orderItems', orderItems)
 
+  // eslint-disable-next-line no-underscore-dangle
   const userId = req.user._id
 
   // eslint-disable-next-line no-console
   console.log('trying to find userId', userId)
 
   const createdOrder = await Order.create({ orderItems, userId, amount: 0 })
-
-  // eslint-disable-next-line no-underscore-dangle
 
   // eslint-disable-next-line no-underscore-dangle
   const order = await Order.findById(createdOrder._id)

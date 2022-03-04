@@ -3,7 +3,6 @@ const express = require('express')
 
 const router = express.Router()
 
-// const Order = require('../models/order')
 const User = require('../models/user')
 const Product = require('../models/product')
 const Order = require('../models/order')
@@ -123,12 +122,23 @@ router.get('/:userId', async (req, res) => {
   else res.sendStatus(404)
 })
 
-// router.get(':/userId/likes', async (req, res) => {
-//   const user = await User.findById(req.params.userId)
-//   const likeProduct = user.likesProduct
+router.get('/:userId/likes', async (req, res) => {
+  const user = await User.findById(req.params.userId)
+  const likedProduct = user.likesProduct
 
-//   res.send(likeProduct)
-// })
+  res.send(likedProduct)
+})
+
+router.post('/:userId/likes', async (req, res) => {
+  const { user } = req
+  const product = await Product.findOne({ _id: req.body.product })
+  console.log('bakalim', product)
+  console.log('bakalim usera', user)
+
+  await user.likeProduct(product)
+
+  res.sendStatus(200)
+})
 
 router.get('/:userId/addresses', async (req, res) => {
   const user = await User.findById(req.params.userId)

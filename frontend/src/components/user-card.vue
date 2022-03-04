@@ -11,9 +11,10 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['addAddress']),
+    ...mapActions(['addAddress', 'fetchSession']),
     async createAddress() {
       await this.addAddress({ address: this.address })
+      await this.fetchSession()
       alert('Address is successfully added!')
     },
   },
@@ -27,7 +28,7 @@ export default {
 .box
   h1 {{ user.name }} ({{ user.age }})
   .infoaddresses(v-for="address in user.addresses")
-    p Address: {{ address || 'This user has no adress.' }}
+  p Address: {{ user.addresses.map(address => address).join(', ') || 'This user has no adress.' }}
   h4 Orders: {{ user.orders.length }}
 
   .order-info(v-for="order in user.orders")
@@ -35,9 +36,9 @@ export default {
       li {{ orderItem.item.name }}
        h6 Quantity: {{ orderItem.quantity }}
        h6 Total Amount: {{ order.amount }}
-  .liked-products(v-for="product in user.likesProduct")
+  .liked-products
     h4 Liked Products:
-    li {{ product.name }} ( {{ product.brand }} )
+    li(v-for="product in user.likesProduct") {{ product.name }} ( {{ product.brand }} )
 
   .addAddress
     label(for="addresses")
@@ -49,6 +50,7 @@ export default {
     h4 Cart:
     div(v-for="orderItem in cart.orderItems")
       p {{ orderItem.item.name}} x {{ orderItem.quantity }}
+    button() Order
 
 
 
