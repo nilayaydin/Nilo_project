@@ -10,6 +10,12 @@ First clone the project to existing coding environment.
 $ git clone git@github.com:niloaydin/nilo_project.git
 ```
 
+## View project in the browser
+
+```
+https://frontend-343aod675a-ew.a.run.app/
+```
+
 ## Access the stack from a browser
 
 Open up your /etc/hosts file.
